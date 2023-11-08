@@ -1,0 +1,12 @@
+apiVersion: addon.open-cluster-management.io/v1alpha1
+kind: AddOnDeploymentConfig
+metadata:
+  labels:
+    app.kubernetes.io/component: manager-workload
+    {{- include "mcra.labels" . | nindent 4 }}
+  name: {{ .Chart.Name }}-deploy-config
+  namespace: {{ .Values.manager.namespace }}
+spec:
+  customizedVariables:
+    - name: AgentReplicas
+      value: {{ .Values.agent.replicas | quote }}

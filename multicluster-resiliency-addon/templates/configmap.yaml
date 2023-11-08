@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/component: manager-workload
+    {{- include "mcra.labels" . | nindent 4 }}
+  name: {{ .Chart.Name }}-config
+  namespace: {{ .Values.manager.namespace }}
+data:
+  hive_pool_name: {{ .Values.hive.pool | quote }}

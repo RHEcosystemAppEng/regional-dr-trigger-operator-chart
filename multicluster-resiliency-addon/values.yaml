@@ -1,0 +1,39 @@
+# Copyright (c) 2023 Red Hat, Inc.
+
+hive:
+  pool: vp-pool
+
+manager:
+  image:
+    registry: quay.io
+    owner: ecosystem-appeng
+    tag: devel
+    pullPolicy: IfNotPresent
+  namespace: open-cluster-management
+  replicas: 1
+  resources:
+    limits:
+      cpu: 500m
+      memory: 128Mi
+    requests:
+      cpu: 10m
+      memory: 64Mi
+  metrics:
+    monitoring:
+      namespace: openshift-monitoring
+    proxy:
+      image: gcr.io/kubebuilder/kube-rbac-proxy:v0.14.1
+      resources:
+        limits:
+          cpu: 500m
+          memory: 128Mi
+        requests:
+          cpu: 5m
+          memory: 64Mi
+
+agent:
+  image:
+    registry: quay.io
+    owner: ecosystem-appeng
+    tag: devel
+  replicas: 1

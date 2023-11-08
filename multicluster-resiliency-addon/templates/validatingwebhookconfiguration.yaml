@@ -1,0 +1,31 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  annotations:
+    service.beta.openshift.io/inject-cabundle: "true"
+  labels:
+    app.kubernetes.io/component: admission-webhook
+    {{- include "mcra.labels" . | nindent 4 }}
+  name: {{ .Chart.Name }}-validating-webhook-configuration
+webhooks:
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: {{ .Chart.Name }}-webhook-service
+      namespace: {{ .Values.manager.namespace }}
+      path: /validate-appeng-ecosystem-redhat-com-v1-resilientcluster
+  failurePolicy: Fail
+  name: resilientcluster.appeng.ecosystem
+  rules:
+  - apiGroups:
+    - appeng.ecosystem.redhat.com
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    - DELETE
+    resources:
+    - resilientclusters
+  sideEffects: None
