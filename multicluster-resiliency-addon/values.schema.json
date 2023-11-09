@@ -15,7 +15,7 @@
       "properties": {
         "pool": {
           "type": "string",
-          "pattern": "^[a-z0-9-_]+$"
+          "pattern": "^[a-zA-Z0-9-_]+$"
         }
       }
     },
@@ -27,21 +27,77 @@
         "replicas",
         "resources",
         "metrics"
-      ]
-    },
-    "agent": {
-      "type": "object",
-      "required": [
-        "image",
-        "replicas"
       ],
       "properties": {
         "image": {
           "$ref": "#/$defs/image"
         },
+        "namespace": {
+          "$ref": "#/$defs/namespace"
+        },
         "replicas": {
-          "type": "integer",
-          "minimum": 1
+          "$ref": "#/$defs/replicas"
+        },
+        "resources": {
+          "$ref": "#/$defs/resources"
+        },
+        "metrics": {
+          "type": "object",
+          "required": [
+            "monitoring",
+            "proxy"
+          ],
+          "properties": {
+            "monitoring": {
+              "type": "object",
+              "required": [
+                "namespace"
+              ],
+              "properties": {
+                "namespace": {
+                  "$ref": "#/$defs/namespace"
+                }
+              }
+            },
+            "proxy": {
+              "type": "object",
+              "required": [
+                "image",
+                "resources"
+              ],
+              "properties": {
+                "image": {
+                  "$ref": "#/$defs/image"
+                },
+                "resources": {
+                  "$ref": "#/$defs/resources"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "agent": {
+      "type": "object",
+      "required": [
+        "image",
+        "namespace",
+        "replicas",
+        "resources"
+      ],
+      "properties": {
+        "image": {
+          "$ref": "#/$defs/image"
+        },
+        "namespace": {
+          "$ref": "#/$defs/namespace"
+        },
+        "replicas": {
+          "$ref": "#/$defs/replicas"
+        },
+        "resources": {
+          "$ref": "#/$defs/resources"
         }
       }
     }
@@ -52,25 +108,70 @@
       "required": [
         "registry",
         "owner",
+        "name",
         "tag",
         "pullPolicy"
       ],
       "properties": {
         "registry": {
           "type": "string",
-          "pattern": "^[a-z0-9-.]+$"
+          "pattern": "^[a-zA-Z0-9-.]+$"
         },
         "owner": {
           "type": "string",
-          "pattern": "^[a-z0-9-_]+$"
+          "pattern": "^[a-zA-Z0-9-_]+$"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9-_]+$"
         },
         "tag": {
           "type": "string",
-          "pattern": "^[a-z0-9-_]+$"
+          "pattern": "^[a-zA-Z0-9-_.]+$"
         },
         "pullPolicy": {
           "type": "string",
           "pattern": "^(Always|Never|IfNotPresent)$"
+        }
+      }
+    },
+    "namespace": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9-_]+$"
+    },
+    "replicas": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "resources": {
+      "type": "object",
+      "required": [
+        "limits",
+        "requests"
+      ],
+      "properties": {
+        "limits": {
+          "$ref": "#/$defs/memcpu"
+        },
+        "requests": {
+          "$ref": "#/$defs/memcpu"
+        }
+      }
+    },
+    "memcpu": {
+      "type": "object",
+      "required": [
+        "cpu",
+        "memory"
+      ],
+      "properties": {
+        "cpu": {
+          "type": "string",
+          "pattern": "^(([1-9]+|[0-9]+[.][0-9]+)|([0-9]+m))$"
+        },
+        "memory": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]+([EPTGMk]|([EPTGMK]i))$"
         }
       }
     }

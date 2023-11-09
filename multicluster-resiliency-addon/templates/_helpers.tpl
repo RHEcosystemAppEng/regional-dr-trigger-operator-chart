@@ -9,10 +9,15 @@ app.kubernetes.io/version: {{ .Chart.AppVersion }}
 
 {{/* Compose manager image */}}
 {{- define "mcra.manager-image" -}}
-{{- printf "%s/%s/%s:%s" .Values.manager.image.registry .Values.manager.image.owner .Chart.Name .Values.manager.image.tag  -}}
+{{- printf "%s/%s/%s:%s" .Values.manager.image.registry .Values.manager.image.owner .Values.manager.image.name .Values.manager.image.tag  -}}
 {{- end -}}
 
 {{/* Compose agent image */}}
 {{- define "mcra.agent-image" -}}
 {{- printf "%s/%s/%s:%s" .Values.agent.image.registry .Values.agent.image.owner .Chart.Name .Values.agent.image.tag  -}}
+{{- end -}}
+
+{{/* Compose metrics proxy image */}}
+{{- define "mcra.metrics-proxy-image" -}}
+{{- printf "%s/%s/%s:%s" .Values.manager.metrics.proxy.image.registry .Values.manager.metrics.proxy.image.owner .Values.manager.metrics.proxy.image.name .Values.manager.metrics.proxy.image.tag  -}}
 {{- end -}}

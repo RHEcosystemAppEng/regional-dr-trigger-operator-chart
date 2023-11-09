@@ -7,6 +7,7 @@ manager:
   image:
     registry: quay.io
     owner: ecosystem-appeng
+    name: multicluster-resiliency-addon
     tag: devel
     pullPolicy: IfNotPresent
   namespace: open-cluster-management
@@ -22,7 +23,12 @@ manager:
     monitoring:
       namespace: openshift-monitoring
     proxy:
-      image: gcr.io/kubebuilder/kube-rbac-proxy:v0.14.1
+      image:
+        registry: gcr.io
+        owner: kubebuilder
+        name: kube-rbac-proxy
+        tag: v0.14.1
+        pullPolicy: IfNotPresent
       resources:
         limits:
           cpu: 500m
@@ -35,7 +41,18 @@ agent:
   image:
     registry: quay.io
     owner: ecosystem-appeng
+    name: multicluster-resiliency-addon
     tag: devel
     # TODO pull policy not yet implemented
     pullPolicy: IfNotPresent
+  # TODO namespace not implemented yet
+  namespace: open-cluster-management-agent-addon
   replicas: 1
+  # TODO resources not yet implemented
+  resources:
+    limits:
+      cpu: 500m
+      memory: 128Mi
+    requests:
+      cpu: 10m
+      memory: 64Mi
