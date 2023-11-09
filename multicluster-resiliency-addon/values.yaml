@@ -36,4 +36,6 @@ agent:
     registry: quay.io
     owner: ecosystem-appeng
     tag: devel
+    # TODO pull policy not yet implemented
+    pullPolicy: IfNotPresent
   replicas: 1

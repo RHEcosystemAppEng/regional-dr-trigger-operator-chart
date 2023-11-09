@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "required": [
+    "hive",
+    "manager",
+    "agent"
+  ],
+  "properties": {
+    "hive": {
+      "type": "object",
+      "required": [
+        "pool"
+      ],
+      "properties": {
+        "pool": {
+          "type": "string",
+          "pattern": "^[a-z0-9-_]+$"
+        }
+      }
+    },
+    "manager": {
+      "type": "object",
+      "required": [
+        "image",
+        "namespace",
+        "replicas",
+        "resources",
+        "metrics"
+      ]
+    },
+    "agent": {
+      "type": "object",
+      "required": [
+        "image",
+        "replicas"
+      ],
+      "properties": {
+        "image": {
+          "$ref": "#/$defs/image"
+        },
+        "replicas": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    }
+  },
+  "$defs": {
+    "image": {
+      "type": "object",
+      "required": [
+        "registry",
+        "owner",
+        "tag",
+        "pullPolicy"
+      ],
+      "properties": {
+        "registry": {
+          "type": "string",
+          "pattern": "^[a-z0-9-.]+$"
+        },
+        "owner": {
+          "type": "string",
+          "pattern": "^[a-z0-9-_]+$"
+        },
+        "tag": {
+          "type": "string",
+          "pattern": "^[a-z0-9-_]+$"
+        },
+        "pullPolicy": {
+          "type": "string",
+          "pattern": "^(Always|Never|IfNotPresent)$"
+        }
+      }
+    }
+  }
+}
