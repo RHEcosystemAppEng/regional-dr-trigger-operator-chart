@@ -1,0 +1,36 @@
+---
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    name: Lint and test the project
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+
+      - name: Get Helm version
+        id: helm
+        run: |
+          version=$(cat Makefile | grep "HELM_VERSION :=" | cut -d'=' -f2 | xargs)
+          echo "version=$version" >> $GITHUB_OUTPUT
+
+      - name: Install helm
+        uses: azure/setup-helm@v3
+        with:
+          version: ${{ steps.helm.outputs.version }}
+
+      - name: Lint chart
+        run: helm lint multicluster-resiliency-addon
+
+      - name: Test templates
+        run: helm template multicluster-resiliency-addon > /dev/null
