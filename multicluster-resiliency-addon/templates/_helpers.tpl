@@ -14,7 +14,7 @@ app.kubernetes.io/version: {{ .Chart.AppVersion }}
 
 {{/* mcra.agent-image composes the manager image */}}
 {{- define "mcra.agent-image" -}}
-{{- printf "%s/%s/%s:%s" .Values.agent.image.registry .Values.agent.image.owner .Chart.Name .Values.agent.image.tag  -}}
+{{- printf "%s/%s/%s:%s" .Values.agent.image.registry .Values.agent.image.owner .Values.agent.image.name .Values.agent.image.tag  -}}
 {{- end -}}
 
 {{/* mcra.metrics-proxy-image composes the manager image */}}

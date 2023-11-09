@@ -40,7 +40,7 @@ manager:
           cpu: 5m
           memory: 64Mi
 
-# manager holds configuration for the Addon Manager deployment running on Spokes
+# agent holds configuration for the Addon Agent deployment running on Spokes
 agent:
   image:
     registry: quay.io
