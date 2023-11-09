@@ -1,8 +1,11 @@
 # Copyright (c) 2023 Red Hat, Inc.
 
+# hive holds configuration for OpenShift Hive access
 hive:
+  # pool is the name of the global ClusterPool for claiming clusters from.
   pool: vp-pool
 
+# manager holds configuration for the Addon Manager deployment running on the Hub
 manager:
   image:
     registry: quay.io
@@ -37,6 +40,7 @@ manager:
           cpu: 5m
           memory: 64Mi
 
+# manager holds configuration for the Addon Manager deployment running on Spokes
 agent:
   image:
     registry: quay.io
