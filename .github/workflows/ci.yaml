@@ -6,6 +6,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'multicluster-resiliency-addon/**'
   pull_request:
     branches:
       - main
