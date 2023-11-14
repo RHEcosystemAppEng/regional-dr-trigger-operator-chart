@@ -49,7 +49,6 @@ agent:
     tag: devel
     # TODO pull policy not yet implemented
     pullPolicy: IfNotPresent
-  # TODO namespace not implemented yet
   namespace: open-cluster-management-agent-addon
   replicas: 1
   # TODO resources not yet implemented
