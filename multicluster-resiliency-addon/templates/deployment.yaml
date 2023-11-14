@@ -27,7 +27,7 @@ spec:
             - manager
             - --agent-image={{ template "mcra.agent-image" . }}
             - --service-account={{ .Chart.Name }}-sa
-            - --configmap_name={{ .Chart.Name }}-config
+            - --configmap-name={{ .Chart.Name }}-config
             - --controller-leader-election
             - --controller-probe-address=:8081
             - --controller-metric-address=127.0.0.1:8080
