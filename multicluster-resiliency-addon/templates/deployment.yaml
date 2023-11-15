@@ -32,7 +32,10 @@ spec:
             - --controller-probe-address=:8081
             - --controller-metric-address=127.0.0.1:8080
             - --enable-validation-webhook
+            {{- if .Values.agent.installAll }}
             - --install-all-strategy
+            - --install-all-namespace={{ .Values.agent.namespace }}
+            {{- end }}
           env:
             - name: POD_NAMESPACE
               valueFrom:

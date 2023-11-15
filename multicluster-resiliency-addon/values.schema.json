@@ -90,6 +90,9 @@
         "image": {
           "$ref": "#/$defs/image"
         },
+        "installAll": {
+          "type": "boolean"
+        },
         "namespace": {
           "$ref": "#/$defs/namespace"
         },
