@@ -32,6 +32,7 @@ spec:
             - --controller-probe-address=:8081
             - --controller-metric-address=127.0.0.1:8080
             - --enable-validation-webhook
+            - --install-all-strategy
           env:
             - name: POD_NAMESPACE
               valueFrom:
