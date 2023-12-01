@@ -7,7 +7,7 @@ metadata:
   name: {{ .Chart.Name }}-deploy-config
   namespace: {{ .Values.manager.namespace }}
 spec:
-  agentInstallNamespace: {{ .Values.agent.namespace }}
+{{/*  agentInstallNamespace: {{ .Values.agent.namespace }}*/}}
   customizedVariables:
     - name: AgentReplicas
       value: {{ .Values.agent.replicas | quote }}
