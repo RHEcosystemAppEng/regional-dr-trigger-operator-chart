@@ -11,7 +11,7 @@ manager:
     registry: quay.io
     owner: ecosystem-appeng
     name: multicluster-resiliency-addon
-    tag: devel
+    tag: 0.0.1
     pullPolicy: IfNotPresent
   namespace: open-cluster-management
   replicas: 1
@@ -46,7 +46,7 @@ agent:
     registry: quay.io
     owner: ecosystem-appeng
     name: multicluster-resiliency-addon
-    tag: devel
+    tag: 0.0.1
     # TODO pull policy not yet implemented
     pullPolicy: IfNotPresent
   installAll: false

@@ -4,8 +4,7 @@ apiVersion: v2
 name: multicluster-resiliency-addon
 description: Helm chart for the MultiCluster Resiliency ACM Addon
 version: 1.0.0
-# TODO set the actual app version once the addon starts versioning
-appVersion: "1.0.0"
+appVersion: "0.0.1"
 home: https://github.com/RHEcosystemAppEng/multicluster-resiliency-addon-chart
 keywords:
   - openshift
