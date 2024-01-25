@@ -1,8 +1,7 @@
-# MultiCluster Resiliency Addon Chart
+# Regional DR Trigger Operator Helm Chart
 
-_Helm Chart_ for the [MultiCluster Resiliency Addon][mcra] for [ACM][acm].
+This chart is generated automatically, see [Makefile](Makefile). Please do not attempt to contribute to the chart
+elements directly. Instead, check the [Regional DR Operator repository](https://github.com/RHEcosystemAppEng/regional-dr-trigger-operator)
+for the scripts used to generate this chart.
 
-
-<!--LINKS-->
-[acm]: https://www.redhat.com/en/technologies/management/advanced-cluster-management
-[mcra]: https://github.com/RHEcosystemAppEng/multicluster-resiliency-addon
+This chart is used as part of the [Regional Resiliency Pattern](https://github.com/RHEcosystemAppEng/regional-resiliency-pattern).
