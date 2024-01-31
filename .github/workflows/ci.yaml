@@ -15,27 +15,32 @@ on:
     branches:
       - main
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
   ci:
     runs-on: ubuntu-latest
     name: Lint and test the project
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Get Helm version
-        id: helm
-        run: |
-          version=$(grep "VERSION_HELM =" Makefile | cut -d'=' -f2 | xargs)
-          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - name: Cache tools
+        uses: actions/cache@v4
+        with:
+          path: ./bin
+          key: ${{ runner.os }}-bin-${{ hashFiles('Makefile') }}
 
       - name: Install helm
-        uses: azure/setup-helm@v3
-        with:
-          version: ${{ steps.helm.outputs.version }}
+        run: make $PWD/bin/helm
 
       - name: Lint chart
-        run: helm lint .
+        run: ./bin/helm lint .
 
       - name: Test templates
-        run: helm template . > /dev/null
+        run: ./bin/helm template . > /dev/null
