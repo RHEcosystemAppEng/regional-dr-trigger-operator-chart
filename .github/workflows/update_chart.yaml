@@ -1,0 +1,46 @@
+---
+name: Update Chart
+
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [ operator-chart-sources-updated ]
+
+concurrency:
+  group: update-chart
+  cancel-in-progress: true
+
+jobs:
+  update_chart:
+    runs-on: ubuntu-latest
+    name: Update Chart via PR
+    environment: update-chart
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+        with:
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
+
+      - name: Configure git
+        run: |
+          git config user.name "${{ github.event.sender.login }}"
+          git config user.email "${{ github.event.sender.login }}@users.noreply.github.com"
+
+      - name: Generate chart
+        run: make generate
+
+      - name: Run diff
+        id: diff
+        continue-on-error: true
+        run: git diff -s --exit-code
+
+      - name: Commit to branch
+        if: steps.diff.outcome == 'failure'
+        run: |
+          git checkout -b new-chart-${{ github.run_id }}
+          git add .
+          git commit -m "build: updated chart ${{ github.run_id }}"
+          git push origin new-chart-${{ github.run_id }}
+
+      - name: Create pull request
+        run: gh pr create --base main --head new-chart-${{ github.run_id }} --fill
