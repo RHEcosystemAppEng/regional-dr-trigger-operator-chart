@@ -21,6 +21,12 @@ jobs:
         with:
           ssh-key: ${{ secrets.DEPLOY_KEY }}
 
+      - name: Cache tools
+        uses: actions/cache@v4
+        with:
+          path: ./bin
+          key: ${{ runner.os }}-bin-${{ hashFiles('Makefile') }}
+
       - name: Configure git
         run: |
           git config user.name "${{ github.event.sender.login }}"
