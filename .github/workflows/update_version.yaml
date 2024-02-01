@@ -1,0 +1,48 @@
+---
+name: Update Chart Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      new_version:
+        description: "New version"
+        required: true
+
+concurrency:
+  group: update-version
+  cancel-in-progress: true
+
+jobs:
+  update_chart_version:
+    runs-on: ubuntu-latest
+    name: Update Chart Version
+    environment: update-chart
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+        with:
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
+
+      - name: Install yq
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          source: github
+          yq: 4.40.5
+
+      - name: Update chart version to ${{ github.event.inputs.new_version }}
+        run: yq -i '.version' Chart.yaml
+
+      - name: Configure git
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+
+      - name: Commit to branch
+        run: |
+          git checkout -b new-version-${{ github.event.inputs.new_version }}
+          git add Chart.yaml
+          git commit -m "build: bumped chart version to ${{ github.event.inputs.new_version }}"
+          git push origin new-version-${{ github.event.inputs.new_version }}
+
+      - name: Create pull request
+        run: gh pr create --base main --head new-version-${{ github.event.inputs.new_version }} --fill
