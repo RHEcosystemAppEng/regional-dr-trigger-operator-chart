@@ -13,7 +13,7 @@ operator:
         memory: 64Mi
   rdrtrigger:
     image: quay.io/ecosystem-appeng/regional-dr-trigger-operator:0.1.0
-    imagePullPolicy: Always
+    imagePullPolicy: IfNotPresent
     resources:
       limits:
         cpu: 500m

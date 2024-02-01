@@ -17,7 +17,7 @@ BIN_HELM ?= $(LOCALBIN)/helm
 VERSION_HELM = v3.14.0
 
 OPERATOR_REPO ?= https://github.com/RHEcosystemAppEng/regional-dr-trigger-operator
-OPERATOR_BRANCH =? main
+OPERATOR_BRANCH ?= main
 
 CHART_VERSION ?= $(shell $(BIN_YQ) '.version' Chart.yaml)
 
