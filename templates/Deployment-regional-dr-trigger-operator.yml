@@ -32,24 +32,6 @@ spec:
     spec:
       containers:
         - args:
-            - --secure-listen-address=0.0.0.0:8383
-            - --upstream=http://127.0.0.1:8080/
-            - --logtostderr=true
-            - --v=0
-          image: {{ .Values.operator.kube_rbac_proxy.image }}
-          imagePullPolicy: {{ .Values.operator.kube_rbac_proxy.imagePullPolicy }}
-          name: kube-rbac-proxy
-          ports:
-            - containerPort: 8383
-              name: https
-              protocol: TCP
-          resources: {{ .Values.operator.kube_rbac_proxy.resources | toYaml | nindent 12 }}
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - ALL
-        - args:
             - rdrtrigger
             - --leader-election
             - --probe-address=:8081
